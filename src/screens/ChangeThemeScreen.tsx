@@ -5,26 +5,51 @@ import HeaderTitle from '../components/HeaderTitle';
 import { ThemeContext } from '../context/themeContext/ThemeContext';
 
 export default function ChangeThemeScreen() {
-  const { setDarkTheme } = useContext(ThemeContext);
+  const {
+    setDarkTheme,
+    setLightTheme,
+    theme: { colors },
+  } = useContext(ThemeContext);
 
   return (
     <View style={styles.globalMargin}>
       <HeaderTitle title="Theme" />
 
-      <TouchableOpacity
-        onPress={setDarkTheme}
-        activeOpacity={0.8}
+      <View
         style={{
-          width: 150,
-          height: 50,
-          borderRadius: 20,
-          justifyContent: 'center',
-          backgroundColor: '#5856d6',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
         }}>
-        <Text style={{ color: '#fff', textAlign: 'center', fontSize: 22 }}>
-          Light / Dark
-        </Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          onPress={setDarkTheme}
+          activeOpacity={0.8}
+          style={{
+            width: 150,
+            height: 50,
+            borderRadius: 20,
+            justifyContent: 'center',
+            backgroundColor: colors.primary,
+          }}>
+          <Text style={{ color: '#fff', textAlign: 'center', fontSize: 22 }}>
+            Dark
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={setLightTheme}
+          activeOpacity={0.8}
+          style={{
+            width: 150,
+            height: 50,
+            borderRadius: 20,
+            justifyContent: 'center',
+            backgroundColor: colors.primary,
+          }}>
+          <Text style={{ color: '#fff', textAlign: 'center', fontSize: 22 }}>
+            Light
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Animated,
   Dimensions,
@@ -16,6 +16,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { useAnimation } from '../hooks/useAnimation';
 // import { useNavigation } from '@react-navigation/core';
 import { StackScreenProps } from '@react-navigation/stack';
+import { ThemeContext } from '../context/themeContext/ThemeContext';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -46,6 +47,9 @@ const items: Slide[] = [
 interface Props extends StackScreenProps<any, any> {}
 
 export default function SlidesScreen({ navigation }: Props) {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
   const { opacity, fadeIn } = useAnimation();
@@ -56,7 +60,7 @@ export default function SlidesScreen({ navigation }: Props) {
       <View
         style={{
           flex: 1,
-          backgroundColor: '#fff',
+          backgroundColor: colors.background,
           borderRadius: 5,
           padding: 50,
           justifyContent: 'center',
@@ -65,8 +69,10 @@ export default function SlidesScreen({ navigation }: Props) {
           source={item.img}
           style={{ width: 350, height: 400, resizeMode: 'center' }}
         />
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.desc}>{item.desc}</Text>
+        <Text style={{ ...styles.title, color: colors.text }}>
+          {item.title}
+        </Text>
+        <Text style={{ ...styles.desc, color: colors.text }}>{item.desc}</Text>
       </View>
     );
   };
@@ -78,7 +84,7 @@ export default function SlidesScreen({ navigation }: Props) {
           onPress={() => navigation.navigate('HomeScreen')}
           style={{
             flexDirection: 'row',
-            backgroundColor: '#5856d6',
+            backgroundColor: colors.primary,
             width: 140,
             height: 50,
             borderRadius: 10,
@@ -89,11 +95,11 @@ export default function SlidesScreen({ navigation }: Props) {
           <Text
             style={{
               fontSize: 25,
-              color: '#fff',
+              color: colors.card,
             }}>
             Entrar
           </Text>
-          <Icon name="chevron-forward-outline" color="#fff" size={30} />
+          <Icon name="chevron-forward-outline" color={colors.card} size={30} />
         </TouchableOpacity>
       </Animated.View>
     );
@@ -133,7 +139,7 @@ export default function SlidesScreen({ navigation }: Props) {
             width: 10,
             height: 10,
             borderRadius: 10,
-            backgroundColor: '#5856d6',
+            backgroundColor: colors.primary,
           }}
         />
         {isButtonEnabled && renderButton()}

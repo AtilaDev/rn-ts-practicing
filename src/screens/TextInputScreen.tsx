@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   View,
   TextInput,
@@ -9,10 +9,14 @@ import {
 } from 'react-native';
 import CustomSwitch from '../components/CustomSwitch';
 import HeaderTitle from '../components/HeaderTitle';
+import { ThemeContext } from '../context/themeContext/ThemeContext';
 import { useForm } from '../hooks/useForm';
 import { styles as themeStyles } from '../theme/appTheme';
 
 export default function TextInputScreen() {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext);
   const { isSusbcribed, form, onChange } = useForm({
     name: '',
     email: '',
@@ -29,14 +33,22 @@ export default function TextInputScreen() {
           <HeaderTitle title="TextInputs" />
 
           <TextInput
-            style={styles.inputStyle}
+            style={{
+              ...styles.inputStyle,
+              borderColor: colors.border,
+              color: colors.text,
+            }}
             placeholder="Nombre"
             autoCorrect={false}
             autoCapitalize="words"
             onChangeText={value => onChange(value, 'name')}
           />
           <TextInput
-            style={styles.inputStyle}
+            style={{
+              ...styles.inputStyle,
+              borderColor: colors.border,
+              color: colors.text,
+            }}
             placeholder="Email"
             autoCorrect={false}
             autoCapitalize="none"
@@ -51,7 +63,11 @@ export default function TextInputScreen() {
           <HeaderTitle title={JSON.stringify(form, null, 3)} />
 
           <TextInput
-            style={styles.inputStyle}
+            style={{
+              ...styles.inputStyle,
+              borderColor: colors.border,
+              color: colors.text,
+            }}
             placeholder="Phone"
             keyboardType="number-pad"
             onChangeText={value => onChange(value, 'phone')}
