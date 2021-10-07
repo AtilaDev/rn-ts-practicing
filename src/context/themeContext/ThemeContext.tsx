@@ -1,5 +1,11 @@
-import React, { createContext, useReducer } from 'react';
-import { lightTheme, themeReducer, ThemeState } from './themeReducer';
+import React, { createContext, useEffect, useReducer } from 'react';
+import { useColorScheme } from 'react-native';
+import {
+  lightTheme,
+  themeReducer,
+  ThemeState,
+  darkTheme,
+} from './themeReducer';
 
 interface ThemeContextProps {
   theme: ThemeState;
@@ -10,7 +16,19 @@ interface ThemeContextProps {
 export const ThemeContext = createContext({} as ThemeContextProps);
 
 export const ThemeProvider = ({ children }: { children: JSX.Element }) => {
-  const [theme, dispatch] = useReducer(themeReducer, lightTheme); //TODO: Read global theme
+  // To use this behaviour about color change from system on Android
+  // is better to use AppState and Appearance (both from react-native)
+  // If you are using only iOS, the next snippet is enough
+  const colorScheme = useColorScheme();
+
+  const [theme, dispatch] = useReducer(
+    themeReducer,
+    colorScheme === 'dark' ? darkTheme : lightTheme,
+  ); //TODO: Read global theme
+
+  useEffect(() => {
+    colorScheme === 'light' ? setLightTheme() : setDarkTheme();
+  }, [colorScheme]);
 
   const setDarkTheme = () => {
     dispatch({ type: 'set_dark_theme' });
