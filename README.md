@@ -2,7 +2,7 @@
 
 This is only a practice with React Native using only TypeScript.
 
-### Importante Notes
+### Important Notes
 
 I put focus only on iOS platform, I mean I didn't install vector icons on Android and any additional lib for the last platform.
 
